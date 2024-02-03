@@ -1,21 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CoreServerService } from '../../core/core-server/core-server.service';
-import { JsonPipe } from '@angular/common';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [JsonPipe],
+  imports: [SharedModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit {
-  testPlatziStore = [];
-
+export class HomeComponent {
   constructor(private coreServer: CoreServerService) {}
-
-  // remove the ngOnInit impl this was just a test by Vsjee
-  async ngOnInit() {
-    this.testPlatziStore = await this.coreServer.testPlatziFakeStore();
-  }
 }
