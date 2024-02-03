@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { CoreServerService } from '../../core/core-server/core-server.service';
 import { SharedModule } from '../../shared/shared.module';
+import { Router } from '@angular/router';
+import { publicRoutes } from '../../core/routes/routes';
 
 @Component({
   selector: 'app-home',
@@ -10,5 +11,11 @@ import { SharedModule } from '../../shared/shared.module';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  constructor(private coreServer: CoreServerService) {}
+  userName = '';
+
+  constructor(private router: Router) {}
+
+  navigateToPlay() {
+    this.router.navigate([publicRoutes.GAME]);
+  }
 }
