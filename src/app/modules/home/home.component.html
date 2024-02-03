@@ -4,9 +4,11 @@
   <div class="home__start">
     <mat-form-field appearance="outline" class="start__input">
       <mat-label>Nombre equipo/jugador</mat-label>
-      <input matInput placeholder="Nombre" />
+      <input matInput placeholder="Nombre" [(ngModel)]="userName" required />
+      <mat-error>Nombre es <strong>requerido</strong></mat-error>
     </mat-form-field>
 
+    @if (userName !== '') {
     <button
       mat-fab
       color="primary"
@@ -15,6 +17,11 @@
     >
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
+    } @else {
+    <button mat-fab color="primary" class="start__btn" disabled>
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+    }
   </div>
 
   <div class="home__footer">
