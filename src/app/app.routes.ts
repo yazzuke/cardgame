@@ -20,4 +20,11 @@ export const routes: Routes = [
         (c) => c.ScoreboardComponent
       ),
   },
+  {
+    path: `${publicRoutes.MADE_BY}`,
+    loadComponent: () =>
+      import('./modules/made-by/made-by.component').then(
+        (c) => c.MadeByComponent
+      ),
+  },
 ];
