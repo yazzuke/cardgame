@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environments } from '../../../environments/environments';
 import { firstValueFrom } from 'rxjs';
-import { IScoreboard, IUser } from '../types/core-server.types';
+import { ICard, IScoreboard, IUser } from '../types/core-server.types';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +55,15 @@ export class CoreServerService {
           observe: 'response',
         }
       )
+    );
+  }
+
+  // Card API
+  getCards(): Promise<HttpResponse<ICard[]>> {
+    return firstValueFrom(
+      this.http.get<ICard[]>(`${this.baseUri}/cards/cardsimg`, {
+        observe: 'response',
+      })
     );
   }
 }
