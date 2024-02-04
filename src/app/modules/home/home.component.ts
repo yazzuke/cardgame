@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { publicRoutes } from '../../core/routes/routes';
 import { CoreServerService } from '../../core/core-server/core-server.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
+import { setSessionStorage } from '../../shared/utils/session-storage.util';
+import { userIdKey } from '../../core/models/session-keys.model';
 
 @Component({
   selector: 'app-home',
@@ -32,6 +34,9 @@ export class HomeComponent {
         'center',
         2000
       );
+
+      setSessionStorage(userIdKey, res.body?.id);
+
       this.navigateToPlay();
     } else {
       this.userName = '';
