@@ -18,5 +18,5 @@ export interface ICard {
   image: string;
   key: string;
   text: string;
-  isSelected: boolean;
+  selected: boolean;
 }
