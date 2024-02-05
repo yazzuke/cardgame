@@ -1,0 +1,77 @@
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { SharedModule } from '../../../../shared/shared.module';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { publicRoutes } from '../../../../core/routes/routes';
+import { CoreServerService } from '../../../../core/core-server/core-server.service';
+import { IScoreboard } from '../../../../core/types/core-server.types';
+import { getSessionStorage } from '../../../../shared/utils/session-storage.util';
+import { userIdKey } from '../../../../core/models/session-keys.model';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
+
+interface IData {
+  timer: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+}
+
+@Component({
+  selector: 'app-game-finish-dialog',
+  standalone: true,
+  imports: [SharedModule],
+  templateUrl: './game-finish-dialog.component.html',
+  styleUrl: './game-finish-dialog.component.scss',
+})
+export class GameFinishDialogComponent implements OnDestroy {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: IData,
+    private dialogRef: MatDialogRef<GameFinishDialogComponent>,
+    private router: Router,
+    private coreServer: CoreServerService,
+    private _snackbar: SnackbarService
+  ) {}
+
+  async createUserScore() {
+    const userScoreboard: IScoreboard = {
+      userId: getSessionStorage(userIdKey),
+      wrongChoises: this.data.wrongAnswers,
+      goodChoises: this.data.correctAnswers,
+      timestamp: Date.now(),
+      resolutionTime: 90 - this.data.timer,
+    };
+
+    const res = await this.coreServer.createUserScore(userScoreboard);
+
+    if (res.status >= 200 && res.status <= 299) {
+      this._snackbar.showNotification(
+        'snackbar-success',
+        'Registro exitoso.... 😎',
+        'bottom',
+        'center',
+        2000
+      );
+    } else {
+      this._snackbar.showNotification(
+        'snackbar-danger',
+        'Registro fallido intenta otra vez.... 😓',
+        'bottom',
+        'center',
+        2000
+      );
+    }
+  }
+
+  closeDialog() {
+    this.createUserScore();
+    this.navigateToScoreBoard();
+    this.dialogRef.close();
+  }
+
+  navigateToScoreBoard() {
+    this.router.navigate([publicRoutes.SCOREBOARD]);
+  }
+
+  ngOnDestroy(): void {
+    this.closeDialog();
+  }
+}

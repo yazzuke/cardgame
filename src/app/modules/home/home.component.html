@@ -9,12 +9,7 @@
     </mat-form-field>
 
     @if (userName !== '') {
-    <button
-      mat-fab
-      color="primary"
-      class="start__btn"
-      (click)="navigateToPlay()"
-    >
+    <button mat-fab color="primary" class="start__btn" (click)="createUser()">
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
     } @else {

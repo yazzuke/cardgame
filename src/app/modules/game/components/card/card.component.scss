@@ -1,0 +1,32 @@
+.card,
+.card__skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+  width: 320px;
+  height: 400px;
+  padding: 0.5rem;
+  border-radius: 40px;
+}
+
+.card__skeleton {
+  background: url(../../../../../assets/card/card.jpg);
+  background-position: top;
+  background-size: contain;
+}
+
+.card {
+  .card__img {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card__text {
+    font-size: 0.7rem;
+    width: 100%;
+  }
+}
