@@ -29,6 +29,8 @@ interface IData {
   styleUrl: './game-finish-dialog.component.scss',
 })
 export class GameFinishDialogComponent {
+  isLoading = false;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IData,
     private dialogRef: MatDialogRef<GameFinishDialogComponent>,
@@ -37,7 +39,7 @@ export class GameFinishDialogComponent {
     private _snackbar: SnackbarService
   ) {}
 
-  async createUserScore() {
+  async createUserScore(): Promise<boolean> {
     const userScoreboard: IScoreboard = {
       userId: getSessionStorage(userIdKey),
       username: getSessionStorage(userNameKey),
@@ -57,6 +59,10 @@ export class GameFinishDialogComponent {
         'center',
         2000
       );
+
+      this.isLoading = true;
+
+      return true;
     } else {
       this._snackbar.showNotification(
         'snackbar-danger',
@@ -65,14 +71,35 @@ export class GameFinishDialogComponent {
         'center',
         2000
       );
+
+      this.isLoading = false;
+
+      return false;
     }
   }
 
   closeDialog() {
-    this.createUserScore();
-    this.navigateToScoreBoard();
-    this.dialogRef.close();
-    clearSessionStorage();
+    const res = this.createUserScore();
+
+    res
+      .then((_res) => {
+        if (_res) {
+          this.isLoading = false;
+          this.navigateToScoreBoard();
+          this.dialogRef.close();
+          clearSessionStorage();
+        } else {
+          this.isLoading = false;
+          this._snackbar.showNotification(
+            'snackbar-danger',
+            'Registro fallido intenta otra vez.... 😓',
+            'bottom',
+            'center',
+            2000
+          );
+        }
+      })
+      .catch((error) => console.error(error));
   }
 
   navigateToScoreBoard() {

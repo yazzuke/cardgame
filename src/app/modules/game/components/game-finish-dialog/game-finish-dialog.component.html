@@ -1,3 +1,4 @@
+@if (!isLoading) {
 <section mat-dialog-title align="center">
   <h1>
     <b>Juego terminado</b>
@@ -9,3 +10,8 @@
 <section mat-dialog-actions align="center">
   <button mat-button (click)="closeDialog()">Cerrar y continuar</button>
 </section>
+} @else {
+<section mat-dialog-content>
+  <mat-spinner></mat-spinner>
+</section>
+}
