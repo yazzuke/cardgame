@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CoreServerService } from '../../core/core-server/core-server.service';
 import { SharedModule } from '../../shared/shared.module';
 import {
@@ -9,7 +9,7 @@ import { cardsKey } from '../../core/models/session-keys.model';
 import { ICard } from '../../core/types/core-server.types';
 import { shuffleArray } from '../../shared/utils/shuffle-array.util';
 import { CardComponent } from './components/card/card.component';
-import { timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { CountDownPipe } from '../../shared/pipes/countdown.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { GameFinishDialogComponent } from './components/game-finish-dialog/game-finish-dialog.component';
@@ -22,11 +22,13 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss',
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   cardsGame: ICard[] = [];
   cardsPosition: boolean[] = [];
   cardPositionIdxTrack: number[] = [];
   cardValidation: ICard[] = [];
+
+  subscribe!: Subscription;
 
   timer = 90;
 
@@ -127,12 +129,12 @@ export class GameComponent implements OnInit {
 
   gameTimer() {
     const source = timer(1000, 1000);
-    const subscribe = source.subscribe((val) => {
+    this.subscribe = source.subscribe((val) => {
       if (this.timer > 0) {
         this.timer--;
       } else {
         this.openGameFinishDialog();
-        subscribe.unsubscribe();
+        this.subscribe.unsubscribe();
       }
     });
   }
@@ -151,5 +153,9 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.initCards();
     this.gameTimer();
+  }
+
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
   }
 }
