@@ -1,1 +1,14 @@
-<p>game works!</p>
+<section class="game">
+  <div class="game__info">
+    <span class="info__timer">{{ timer | countdown }}</span>
+    <span class="info__correct">Correctas {{ correctAnswers }}</span>
+    <span class="info__wrong">Erroneas {{ wrongAnswers }}</span>
+  </div>
+  @for (card of cardsGame; track $index) {
+  <app-card
+    [card]="card"
+    [cardPosition]="cardsPosition[$index]"
+    (click)="selectedCard(card, $index)"
+  ></app-card>
+  }
+</section>

@@ -1,0 +1,41 @@
+.game {
+  position: relative;
+  padding: 2rem 5%;
+  display: grid;
+  place-content: center;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+
+  .game__info {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-weight: 900;
+
+    .info__timer {
+      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px,
+        rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px,
+        rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px,
+        rgba(0, 0, 0, 0.07) 0px 32px 64px;
+      background-color: rgb(132, 0, 255);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+    .info__correct,
+    .info__wrong {
+      align-items: center;
+    }
+  }
+
+  app-card {
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+  }
+}
