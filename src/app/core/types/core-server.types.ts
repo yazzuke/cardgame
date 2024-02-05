@@ -8,6 +8,7 @@ export interface IUser {
 export interface IScoreboard {
   id?: string;
   userId: string;
+  username: string;
   wrongChoises: number;
   goodChoises: number;
   timestamp: number;
