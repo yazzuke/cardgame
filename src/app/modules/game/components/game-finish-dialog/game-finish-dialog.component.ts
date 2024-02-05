@@ -5,7 +5,10 @@ import { Router } from '@angular/router';
 import { publicRoutes } from '../../../../core/routes/routes';
 import { CoreServerService } from '../../../../core/core-server/core-server.service';
 import { IScoreboard } from '../../../../core/types/core-server.types';
-import { getSessionStorage } from '../../../../shared/utils/session-storage.util';
+import {
+  clearSessionStorage,
+  getSessionStorage,
+} from '../../../../shared/utils/session-storage.util';
 import {
   userIdKey,
   userNameKey,
@@ -69,6 +72,7 @@ export class GameFinishDialogComponent {
     this.createUserScore();
     this.navigateToScoreBoard();
     this.dialogRef.close();
+    clearSessionStorage();
   }
 
   navigateToScoreBoard() {
