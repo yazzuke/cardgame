@@ -1,0 +1,8 @@
+@if (cardPosition) {
+<section class="card">
+  <img [src]="card.image" [alt]="card.key" class="card__img" />
+  <p class="card__text" align="center">{{ card.text }}</p>
+</section>
+} @else {
+<section class="card__skeleton"></section>
+}
