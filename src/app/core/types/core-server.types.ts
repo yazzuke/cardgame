@@ -9,8 +9,8 @@ export interface IScoreboard {
   id?: string;
   userId: string;
   username: string;
-  wrongChoises: number;
-  goodChoises: number;
+  wrongChoices: number;
+  goodChoices: number;
   timestamp: number;
   resolutionTime: number;
 }

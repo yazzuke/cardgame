@@ -38,8 +38,8 @@ export class GameFinishDialogComponent {
     const userScoreboard: IScoreboard = {
       userId: getSessionStorage(userIdKey),
       username: getSessionStorage(userNameKey),
-      wrongChoises: this.data.wrongAnswers,
-      goodChoises: this.data.correctAnswers,
+      wrongChoices: this.data.wrongAnswers,
+      goodChoices: this.data.correctAnswers,
       timestamp: Date.now(),
       resolutionTime: 90 - this.data.timer,
     };
