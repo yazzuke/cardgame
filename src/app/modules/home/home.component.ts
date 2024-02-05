@@ -5,7 +5,7 @@ import { publicRoutes } from '../../core/routes/routes';
 import { CoreServerService } from '../../core/core-server/core-server.service';
 import { SnackbarService } from '../../shared/services/snackbar.service';
 import { setSessionStorage } from '../../shared/utils/session-storage.util';
-import { userIdKey } from '../../core/models/session-keys.model';
+import { userIdKey, userNameKey } from '../../core/models/session-keys.model';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +36,7 @@ export class HomeComponent {
       );
 
       setSessionStorage(userIdKey, res.body?.id);
+      setSessionStorage(userNameKey, res.body?.username);
 
       this.navigateToPlay();
     } else {

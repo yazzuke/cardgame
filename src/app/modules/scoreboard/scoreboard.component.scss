@@ -1,0 +1,27 @@
+.section {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  text-align: center;
+  margin: 1.2rem 5%;
+
+  .section__refresh--btn {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.loader {
+  display: grid;
+  place-content: center;
+  height: 100%;
+}
