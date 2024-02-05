@@ -1,0 +1,1 @@
+import{ka as i}from"./chunk-5TXZLY6E.js";var c=(()=>{let t=class t{transform(r){let n=Math.floor(r/60),s=r%60;return r<=59?`${s}s`:`${n}m ${s}s`}};t.\u0275fac=function(n){return new(n||t)},t.\u0275pipe=i({name:"countdown",type:t,pure:!0,standalone:!0});let e=t;return e})();export{c as a};
