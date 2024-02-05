@@ -1,1 +1,66 @@
-<p>scoreboard works!</p>
+@if (isLoaded) {
+<section class="section">
+  <button
+    mat-fab
+    color="primary"
+    class="section__refresh--btn"
+    (click)="refreshScoreboard()"
+  >
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <h1>
+    <b>
+      Scoreboard
+      <br />
+      los mejores fueron...
+    </b>
+  </h1>
+  <table mat-table [dataSource]="scoreboard" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="Posicion">
+      <th mat-header-cell *matHeaderCellDef>Posicion</th>
+      <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="Fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{ element.timestamp | date }}</td>
+    </ng-container>
+
+    <!-- Player/team Column -->
+    <ng-container matColumnDef="Jugador/Equipo">
+      <th mat-header-cell *matHeaderCellDef>Jugador/Equipo</th>
+      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    </ng-container>
+
+    <!-- Wrong choises Column -->
+    <ng-container matColumnDef="Respuestas Correctas">
+      <th mat-header-cell *matHeaderCellDef>Respuestas Correctas</th>
+      <td mat-cell *matCellDef="let element">{{ element.goodChoices }}</td>
+    </ng-container>
+
+    <!-- Correct choises Column -->
+    <ng-container matColumnDef="Respuestas Incorrectas">
+      <th mat-header-cell *matHeaderCellDef>Respuestas Incorrectas</th>
+      <td mat-cell *matCellDef="let element">{{ element.wrongChoices }}</td>
+    </ng-container>
+
+    <!-- Timer Column -->
+    <ng-container matColumnDef="Tiempo">
+      <th mat-header-cell *matHeaderCellDef>Tiempo</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.resolutionTime | countdown }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</section>
+
+} @else {
+<section class="loader">
+  <mat-spinner></mat-spinner>
+</section>
+}

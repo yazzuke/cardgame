@@ -5,8 +5,14 @@ import { Router } from '@angular/router';
 import { publicRoutes } from '../../../../core/routes/routes';
 import { CoreServerService } from '../../../../core/core-server/core-server.service';
 import { IScoreboard } from '../../../../core/types/core-server.types';
-import { getSessionStorage } from '../../../../shared/utils/session-storage.util';
-import { userIdKey } from '../../../../core/models/session-keys.model';
+import {
+  clearSessionStorage,
+  getSessionStorage,
+} from '../../../../shared/utils/session-storage.util';
+import {
+  userIdKey,
+  userNameKey,
+} from '../../../../core/models/session-keys.model';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 interface IData {
@@ -22,7 +28,7 @@ interface IData {
   templateUrl: './game-finish-dialog.component.html',
   styleUrl: './game-finish-dialog.component.scss',
 })
-export class GameFinishDialogComponent implements OnDestroy {
+export class GameFinishDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IData,
     private dialogRef: MatDialogRef<GameFinishDialogComponent>,
@@ -34,8 +40,9 @@ export class GameFinishDialogComponent implements OnDestroy {
   async createUserScore() {
     const userScoreboard: IScoreboard = {
       userId: getSessionStorage(userIdKey),
-      wrongChoises: this.data.wrongAnswers,
-      goodChoises: this.data.correctAnswers,
+      username: getSessionStorage(userNameKey),
+      wrongChoices: this.data.wrongAnswers,
+      goodChoices: this.data.correctAnswers,
       timestamp: Date.now(),
       resolutionTime: 90 - this.data.timer,
     };
@@ -65,13 +72,10 @@ export class GameFinishDialogComponent implements OnDestroy {
     this.createUserScore();
     this.navigateToScoreBoard();
     this.dialogRef.close();
+    clearSessionStorage();
   }
 
   navigateToScoreBoard() {
     this.router.navigate([publicRoutes.SCOREBOARD]);
-  }
-
-  ngOnDestroy(): void {
-    this.closeDialog();
   }
 }
